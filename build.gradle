@@ -1,0 +1,32 @@
+plugins {
+  id 'io.vertx.vertx-plugin' version '0.3.1'
+}
+
+repositories {
+  mavenCentral()
+  jcenter()
+}
+
+version = '0.1.0'
+group = 'network.as2'
+description = 'Freight Trust Network EDI Service'
+
+dependencies {
+  compile 'io.vertx:vertx-core'
+  compile 'io.vertx:vertx-service-proxy'
+  compile 'io.vertx:vertx-web-api-contract'
+  compile 'io.vertx:vertx-web-api-service'
+  compile 'io.vertx:vertx-web-api-service:processor'
+  compile 'io.vertx:vertx-web'
+  compile 'io.vertx:vertx-unit'
+  compile 'io.vertx:vertx-codegen:processor'
+  compile 'io.vertx:vertx-web-client'
+  compile 'io.vertx:vertx-service-proxy:processor'
+  compile 'junit:junit:4.12'
+}
+
+vertx {
+  mainVerticle = "network.as2.openedi_event_bus_service.MainVerticle"
+  vertxVersion = "3.9.1"
+}
+

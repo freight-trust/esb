@@ -1,0 +1,1703 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "EDI Management API",
+    "description": "EDI validation, translation, and management system.",
+    "version": "1.0.2"
+  },
+  "tags": [
+    {
+      "name": "Transactions",
+      "description": "Perform EDI validation and translation to XML, or translation from XML to EDI"
+    },
+    {
+      "name": "Administration",
+      "description": "Trading partner maintenance and configuration"
+    },
+    {
+      "name": "Configuration",
+      "description": "Configuration information for a web-based user interface"
+    },
+    {
+      "name": "Schema Maintenance",
+      "description": "Define and review the EDI schemas available in the system"
+    },
+    {
+      "name": "History",
+      "description": "Trading partner transaction history"
+    }
+  ],
+  "paths": {
+    "/config.js": {
+      "get": {
+        "tags": [
+          "Configuration"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/javascript": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/controls/group-controls/{id}": {
+      "get": {
+        "tags": [
+          "Administration"
+        ],
+        "summary": "Retrieve a group control by ID",
+        "operationId": "controls.retrieve-group-control",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Group control ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Group control retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupControl"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Group control not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Administration"
+        ],
+        "summary": "Updates a group control",
+        "operationId": "controls.update-group-control",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Interchange control ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The Interchange Control Id",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupControl"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Group control updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupControl"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Group control not found"
+          }
+        }
+      }
+    },
+    "/controls/interchange-controls/{id}": {
+      "get": {
+        "tags": [
+          "Administration"
+        ],
+        "summary": "Retrieve an interchange control by ID",
+        "operationId": "controls.retrieve-interchange-control",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Interchange control ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Interchange control retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InterchangeControl"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Interchange control not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Administration"
+        ],
+        "summary": "Updates an interchange control",
+        "operationId": "controls.update-interchange-control",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Interchange control ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InterchangeControl"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Interchange control updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InterchangeControl"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Interchange control not found"
+          }
+        }
+      }
+    },
+    "/controls/interchange-controls/{id}/group-controls": {
+      "get": {
+        "tags": [
+          "Administration"
+        ],
+        "summary": "Retrieve an interchange control's group control list",
+        "operationId": "controls.retrieve-group-controls",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Interchange control ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Group control list retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GroupControl"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Interchange control not found"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Administration"
+        ],
+        "summary": "Create a new group control record for an interchange control.",
+        "operationId": "controls.create-group-control",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Interchange control ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupControl"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "headers": {
+              "Location": {
+                "description": "Location of the newly created record",
+                "style": "simple",
+                "schema": {
+                  "format": "uri",
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupControl"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "409": {
+            "description": "Duplicate group"
+          }
+        }
+      }
+    },
+    "/controls/partners": {
+      "get": {
+        "tags": [
+          "Administration"
+        ],
+        "summary": "Retrieve a list of trading partners, optionally filtering by name",
+        "operationId": "controls.retrieve-partners",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "schema": {
+              "default": "",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TradingPartner list retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TradingPartner"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Administration"
+        ],
+        "summary": "Create a new trading partner tradingPartner",
+        "operationId": "controls.create-tradingPartner",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TradingPartner"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "headers": {
+              "Location": {
+                "description": "Location of the newly created trading partner tradingPartner",
+                "style": "simple",
+                "schema": {
+                  "format": "uri",
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TradingPartner"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "409": {
+            "description": "Duplicate tradingPartner name"
+          }
+        }
+      }
+    },
+    "/controls/partners/{id}": {
+      "get": {
+        "tags": [
+          "Administration"
+        ],
+        "summary": "Retrieve a trading partner by unique identifier",
+        "operationId": "controls.retrieve-partner",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "TradingPartner ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TradingPartner Successfully Retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TradingPartner"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "TradingPartner Not Found"
+          }
+        }
+      }
+    },
+    "/controls/partners/{id}/interchange-controls": {
+      "get": {
+        "tags": [
+          "Administration"
+        ],
+        "summary": "Retrieve a trading partner's interchange controls",
+        "operationId": "controls.retrieve-interchange-controls",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "TradingPartner ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Interchange control list retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InterchangeControl"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "TradingPartner Not Found"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Administration"
+        ],
+        "summary": "Create a new interchange control record for a trading partner.",
+        "operationId": "controls.create-interchange-control",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "TradingPartner ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InterchangeControl"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "headers": {
+              "Location": {
+                "description": "Location of the newly created interchange control record",
+                "style": "simple",
+                "schema": {
+                  "format": "uri",
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InterchangeControl"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "409": {
+            "description": "Duplicate tradingPartner name"
+          }
+        }
+      }
+    },
+    "/history/groups/{uuid}": {
+      "get": {
+        "tags": [
+          "History"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/history/groups/{uuid}/transactions": {
+      "get": {
+        "tags": [
+          "History"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/history/interchanges": {
+      "get": {
+        "tags": [
+          "History"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "format": "int32",
+              "default": 1,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/history/interchanges/{uuid}": {
+      "get": {
+        "tags": [
+          "History"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/history/interchanges/{uuid}/groups": {
+      "get": {
+        "tags": [
+          "History"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/history/interchanges/{uuid}/relationships/acknowledgement": {
+      "get": {
+        "tags": [
+          "History"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/history/interchanges/{uuid}/transactions": {
+      "get": {
+        "tags": [
+          "History"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/history/transactions/{uuid}": {
+      "get": {
+        "tags": [
+          "History"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/schemas": {
+      "get": {
+        "tags": [
+          "Schema Maintenance"
+        ],
+        "summary": "Retrieve a list of transaction schemas known to the system",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Schema Maintenance"
+        ],
+        "summary": "Create a new transaction schema to be used for EDI validation",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "standard": {
+                    "pattern": "\\S",
+                    "type": "string",
+                    "nullable": false
+                  },
+                  "agencyCode": {
+                    "pattern": "\\S",
+                    "type": "string",
+                    "nullable": false
+                  },
+                  "version": {
+                    "pattern": "\\S",
+                    "type": "string",
+                    "nullable": false
+                  },
+                  "release": {
+                    "default": "",
+                    "type": "string"
+                  },
+                  "industryCode": {
+                    "default": "",
+                    "type": "string"
+                  },
+                  "transactionCode": {
+                    "pattern": "\\S",
+                    "type": "string",
+                    "nullable": false
+                  },
+                  "senderIdType": {
+                    "default": "",
+                    "type": "string"
+                  },
+                  "senderId": {
+                    "default": "",
+                    "type": "string"
+                  },
+                  "receiverIdType": {
+                    "default": "",
+                    "type": "string"
+                  },
+                  "receiverId": {
+                    "default": "",
+                    "type": "string"
+                  },
+                  "file": {
+                    "$ref": "#/components/schemas/InputStream"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "409": {
+            "description": "Duplicate schema"
+          }
+        }
+      }
+    },
+    "/schemas/control": {
+      "get": {
+        "tags": [
+          "Schema Maintenance"
+        ],
+        "parameters": [
+          {
+            "name": "standard",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "version",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "content": {
+              "application/schema+json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/schemas/transaction": {
+      "get": {
+        "tags": [
+          "Schema Maintenance"
+        ],
+        "parameters": [
+          {
+            "name": "standard",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "version",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "content": {
+              "application/schema+json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/schemas/{standard}/{type}/{version}/{file}": {
+      "get": {
+        "tags": [
+          "Schema Maintenance"
+        ],
+        "parameters": [
+          {
+            "name": "file",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "standard",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "content": {
+              "application/xml": {
+                "schema": {
+                  "type": "object"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Schema Maintenance"
+        ],
+        "parameters": [
+          {
+            "name": "file",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "standard",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "content": {}
+          }
+        }
+      }
+    },
+    "/transactions/inbound": {
+      "post": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Submit an EDI interchange for validation and conversion (Persistent)",
+        "description": "Submit an EDI interchange for validation and conversion to a back-end application. This operation\naccepts a well-formed EDI interchange and (when successfully translated) responds with an\nEDI format corresponding to the input (e.g. an X12 `997`). The transformed interchange is written to\nlocal server storage (other other queuing system) to be retrieved by or forwarded to a back-end\napplication for further processing.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-TradingChannelName"
+          }
+        ],
+        "requestBody": {
+          "description": "EDI payload in either X12 or EDIFACT format",
+          "content": {
+            "application/EDI-X12": {
+              "schema": {
+                "description": "Properly formatted EDI interchange",
+                "type": "object"
+              }
+            },
+            "application/EDIFACT": {
+              "schema": {
+                "description": "Properly formatted EDI interchange",
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "headers": {
+              "Location": {
+                "description": "Location where the converted transaction has been stored",
+                "style": "simple",
+                "schema": {
+                  "format": "uri",
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/EDI-X12": {
+                "schema": {
+                  "$ref": "#/components/schemas/AcknowledgementEDI"
+                }
+              },
+              "application/EDIFACT": {
+                "schema": {
+                  "$ref": "#/components/schemas/AcknowledgementEDI"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/EDI-X12": {
+                "schema": {
+                  "$ref": "#/components/schemas/AcknowledgementEDI"
+                }
+              },
+              "application/EDIFACT": {
+                "schema": {
+                  "$ref": "#/components/schemas/AcknowledgementEDI"
+                }
+              },
+              "text/plain": {
+                "schema": {
+                  "description": "Message describing the nature of the error",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/transactions/outbound": {
+      "post": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Submit an XML format interchange for conversion to EDI (Persistent)",
+        "description": "Submit an XML interchange for validation and conversion to EDI. This operation\naccepts a well-formed XML interchange and (when successfully translated) responds with an\nEDI format corresponding to the input. Information about the interchange (transaction control\nnumbers, types of transactions, etc.) is persisted to the Fresno database for tracking and\nto support acknowledgement confirmation.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-TradingChannelName"
+          }
+        ],
+        "requestBody": {
+          "description": "XML payload to be converted to EDI",
+          "content": {
+            "application/xml": {
+              "schema": {
+                "description": "Properly formatted XML interchange",
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/EDI-X12": {
+                "schema": {
+                  "description": "EDI formatted interchange",
+                  "type": "object"
+                }
+              },
+              "application/EDIFACT": {
+                "schema": {
+                  "description": "EDI formatted interchange",
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/transactions/translator": {
+      "post": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Translate an EDI interchange (Persistent)",
+        "description": "Translate an EDI interchange and persist meta information and validation status in history.\nThis operation accepts a well-formed EDI interchange and (when successfully translated) responds\nwith an XML representation of the interchange. The `Link` header includes a URI that may be used\nfor retrieval of validation/status information pertaining to the interchange.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-TradingChannelName"
+          }
+        ],
+        "requestBody": {
+          "description": "EDI payload in either X12 or EDIFACT format",
+          "content": {
+            "application/EDI-X12": {
+              "schema": {
+                "description": "Properly formatted EDI interchange",
+                "type": "object"
+              }
+            },
+            "application/EDIFACT": {
+              "schema": {
+                "description": "Properly formatted EDI interchange",
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK - Interchange translated without fatal errors",
+            "headers": {
+              "Link": {
+                "description": "Location to retrieve the associated acknowledgement/validation information associated with the request.",
+                "style": "simple"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Interchange translation encounted fatal errors with the input",
+            "headers": {
+              "Link": {
+                "description": "Location to retrieve the associated acknowledgement/validation information associated with the request.",
+                "style": "simple"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/transactions/validator": {
+      "post": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Validate an EDI interchange (Non-persistent)",
+        "description": "Validate an EDI interchange *without* persisting meta information and validation status in history.\nThis operation accepts a well-formed EDI interchange and responds with either an EDI format\ncorresponding to the input or a JSON format describing the result of validation.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-TradingChannelName"
+          }
+        ],
+        "requestBody": {
+          "description": "EDI payload in either X12 or EDIFACT format",
+          "content": {
+            "application/EDI-X12": {
+              "schema": {
+                "description": "Properly formatted EDI interchange",
+                "type": "object"
+              }
+            },
+            "application/EDIFACT": {
+              "schema": {
+                "description": "Properly formatted EDI interchange",
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK - Interchange validated without fatal errors",
+            "content": {
+              "application/EDIFACT": {
+                "schema": {
+                  "$ref": "#/components/schemas/AcknowledgementEDI"
+                }
+              },
+              "application/EDI-X12": {
+                "schema": {
+                  "$ref": "#/components/schemas/AcknowledgementEDI"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AcknowledgementJSON"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Interchange validation encounted fatal errors with the input",
+            "content": {
+              "application/EDIFACT": {
+                "schema": {
+                  "$ref": "#/components/schemas/AcknowledgementEDI"
+                }
+              },
+              "application/EDI-X12": {
+                "schema": {
+                  "$ref": "#/components/schemas/AcknowledgementEDI"
+                }
+              },
+              "text/plain": {
+                "schema": {
+                  "description": "Message describing the nature of the error",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AcknowledgementEDI": {
+        "description": "An EDI acknowledgement specific to the request body submitted.\nFor example, a 997 for X12 requests or a CONTRL for EDIFACT requests.\n",
+        "type": "object",
+        "nullable": true,
+        "$thisref": "#/components/schemas/AcknowledgementEDI"
+      },
+      "AcknowledgementJSON": {
+        "type": "object",
+        "properties": {
+          "interchanges": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AcknowledgementJSONInterchange"
+            }
+          }
+        },
+        "$thisref": "#/components/schemas/AcknowledgementJSON"
+      },
+      "AcknowledgementJSONAddressee": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "$thisref": "#/components/schemas/AcknowledgementJSONAddressee"
+      },
+      "AcknowledgementJSONElementError": {
+        "type": "object",
+        "properties": {
+          "component": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "element": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "occurrence": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "$thisref": "#/components/schemas/AcknowledgementJSONElementError"
+      },
+      "AcknowledgementJSONGroup": {
+        "type": "object",
+        "properties": {
+          "agencyCode": {
+            "type": "string"
+          },
+          "controlReference": {
+            "type": "string"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AcknowledgementJSONSegmentError"
+            }
+          },
+          "industryCode": {
+            "type": "string"
+          },
+          "release": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "receiver": {
+            "$ref": "#/components/schemas/AcknowledgementJSONAddressee"
+          },
+          "sender": {
+            "$ref": "#/components/schemas/AcknowledgementJSONAddressee"
+          },
+          "transactions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AcknowledgementJSONTransaction"
+            },
+            "nullable": true
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "$thisref": "#/components/schemas/AcknowledgementJSONGroup"
+      },
+      "AcknowledgementJSONInterchange": {
+        "type": "object",
+        "properties": {
+          "agencyCode": {
+            "type": "string"
+          },
+          "controlReference": {
+            "type": "string"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AcknowledgementJSONSegmentError"
+            }
+          },
+          "industryCode": {
+            "type": "string"
+          },
+          "release": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "groups": {
+            "description": "Present only when the submitted interchange contains functional groups",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AcknowledgementJSONGroup"
+            },
+            "nullable": true
+          },
+          "receiver": {
+            "$ref": "#/components/schemas/AcknowledgementJSONAddressee"
+          },
+          "sender": {
+            "$ref": "#/components/schemas/AcknowledgementJSONAddressee"
+          },
+          "transactions": {
+            "description": "Present only when the submitted interchange contains transactions directly within the interchange",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AcknowledgementJSONTransaction"
+            },
+            "nullable": true
+          }
+        },
+        "$thisref": "#/components/schemas/AcknowledgementJSONInterchange"
+      },
+      "AcknowledgementJSONSegmentError": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AcknowledgementJSONElementError"
+            }
+          },
+          "position": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "segment": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "$thisref": "#/components/schemas/AcknowledgementJSONSegmentError"
+      },
+      "AcknowledgementJSONTransaction": {
+        "type": "object",
+        "properties": {
+          "agencyCode": {
+            "type": "string"
+          },
+          "controlReference": {
+            "type": "string"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AcknowledgementJSONSegmentError"
+            }
+          },
+          "industryCode": {
+            "type": "string"
+          },
+          "release": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "$thisref": "#/components/schemas/AcknowledgementJSONTransaction"
+      },
+      "GroupControl": {
+        "required": [
+          "version",
+          "localId",
+          "remoteId",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "agencyCode": {
+            "description": "Agency code of the standards body that defines the schema of this record",
+            "maxLength": 8,
+            "type": "string"
+          },
+          "createdAt": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/OffsetDateTime"
+              },
+              {
+                "description": "Date and time the record was created",
+                "readOnly": true
+              }
+            ]
+          },
+          "industryCode": {
+            "description": "Industry identifier (implementation version) of the standard",
+            "maxLength": 255,
+            "type": "string"
+          },
+          "lastControlNumber": {
+            "format": "int64",
+            "description": "The previous control number used for outbound data. Defaults to `0` for new records.",
+            "type": "integer"
+          },
+          "release": {
+            "description": "Release (sub-version) of the standard",
+            "maxLength": 255,
+            "type": "string"
+          },
+          "updatedAt": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/OffsetDateTime"
+              },
+              {
+                "description": "Date and time the record was last updated",
+                "readOnly": true
+              }
+            ]
+          },
+          "uuid": {
+            "title": "Unique system-generated identifier for the control record",
+            "type": "string",
+            "readOnly": true
+          },
+          "version": {
+            "description": "Version of the standard",
+            "maxLength": 255,
+            "pattern": "\\S",
+            "type": "string",
+            "nullable": false
+          },
+          "localId": {
+            "description": "Used for the sender on output interchanges and the receiver on inbound groups",
+            "type": "string"
+          },
+          "localIdType": {
+            "description": "Used for the sender on output interchanges and the receiver on inbound groups. Not used for X12",
+            "type": "string"
+          },
+          "remoteId": {
+            "description": "Used for the receiver on output interchanges and the sender on inbound groups",
+            "type": "string"
+          },
+          "remoteIdType": {
+            "description": "Used for the receiver on output interchanges and the sender on inbound groups. Not used for X12",
+            "type": "string"
+          },
+          "type": {
+            "description": "Functional/message group type code",
+            "type": "string"
+          }
+        },
+        "$thisref": "#/components/schemas/GroupControl"
+      },
+      "InputStream": {
+        "type": "object",
+        "$thisref": "#/components/schemas/InputStream"
+      },
+      "InterchangeControl": {
+        "required": [
+          "version",
+          "localId",
+          "remoteId",
+          "standard",
+          "testIndicator"
+        ],
+        "type": "object",
+        "properties": {
+          "agencyCode": {
+            "description": "Agency code of the standards body that defines the schema of this record",
+            "maxLength": 4,
+            "type": "string"
+          },
+          "createdAt": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/OffsetDateTime"
+              },
+              {
+                "description": "Date and time the record was created",
+                "readOnly": true
+              }
+            ]
+          },
+          "industryCode": {
+            "description": "Industry identifier (implementation version) of the standard",
+            "maxLength": 255,
+            "type": "string"
+          },
+          "lastControlNumber": {
+            "format": "int64",
+            "description": "The previous control number used for outbound data. Defaults to `0` for new records.",
+            "type": "integer"
+          },
+          "release": {
+            "description": "Release (sub-version) of the standard",
+            "maxLength": 255,
+            "type": "string"
+          },
+          "updatedAt": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/OffsetDateTime"
+              },
+              {
+                "description": "Date and time the record was last updated",
+                "readOnly": true
+              }
+            ]
+          },
+          "uuid": {
+            "title": "Unique system-generated identifier for the control record",
+            "type": "string",
+            "readOnly": true
+          },
+          "version": {
+            "description": "Version of the standard",
+            "maxLength": 255,
+            "pattern": "\\S",
+            "type": "string",
+            "nullable": false
+          },
+          "componentSeparator": {
+            "description": "Component element separator to be used for outbound interchanges. Default value is dialect specific (EDIFACT/X12) if not specified.",
+            "maxLength": 1,
+            "type": "string"
+          },
+          "decimalMark": {
+            "description": "Decimal character to be used for outbound interchanges. Not supported for X12",
+            "maxLength": 1,
+            "type": "string"
+          },
+          "elementSeparator": {
+            "description": "Element separator to be used for outbound interchanges. Default value is dialect specific (EDIFACT/X12) if not specified.",
+            "maxLength": 1,
+            "type": "string"
+          },
+          "localId": {
+            "description": "Used for the sender on output interchanges and the receiver on inbound interchanges",
+            "maxLength": 255,
+            "pattern": "\\S",
+            "type": "string",
+            "nullable": false
+          },
+          "localIdType": {
+            "description": "Used for the sender on output interchanges and the receiver on inbound interchanges. Optional for EDIFACT, required for X12",
+            "maxLength": 255,
+            "pattern": "\\S",
+            "type": "string",
+            "nullable": false
+          },
+          "releaseCharacter": {
+            "description": "Release character to be used for outbound interchanges. Default value is dialect specific (EDIFACT/X12) if not specified.",
+            "maxLength": 1,
+            "type": "string"
+          },
+          "remoteId": {
+            "description": "Used for the receiver on output interchanges and the sender on inbound interchanges",
+            "maxLength": 255,
+            "pattern": "\\S",
+            "type": "string",
+            "nullable": false
+          },
+          "remoteIdType": {
+            "description": "Used for the receiver on output interchanges and the sender on inbound interchanges. Optional for EDIFACT, required for X12",
+            "maxLength": 255,
+            "pattern": "\\S",
+            "type": "string",
+            "nullable": false
+          },
+          "repetitionSeparator": {
+            "description": "Repetition separator to be used for outbound interchanges. Default value is dialect specific (EDIFACT/X12) if not specified.",
+            "maxLength": 1,
+            "type": "string"
+          },
+          "segmentTerminator": {
+            "description": "Segment terminator to be used for outbound interchanges. Default value is dialect specific (EDIFACT/X12) if not specified.",
+            "maxLength": 1,
+            "type": "string"
+          },
+          "standard": {
+            "description": "EDI standard",
+            "maxLength": 7,
+            "pattern": "\\S",
+            "enum": [
+              "EDIFACT",
+              "X12"
+            ],
+            "type": "string",
+            "nullable": false
+          },
+          "testIndicator": {
+            "description": "Test indicator to be used for outbound interchanges. Value is dialect specific (EDIFACT/X12). For example, X12 uses `P` and `T`, whereas EDIFACT uses `1` through `5`.",
+            "maxLength": 1,
+            "type": "string"
+          },
+          "delimiters": {
+            "$ref": "#/components/schemas/MapStringString"
+          }
+        },
+        "$thisref": "#/components/schemas/InterchangeControl"
+      },
+      "MapStringString": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "string"
+        },
+        "$thisref": "#/components/schemas/MapStringString"
+      },
+      "OffsetDateTime": {
+        "format": "date-time",
+        "type": "string"
+      },
+      "TradingPartner": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "createdAt": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/OffsetDateTime"
+              },
+              {
+                "description": "Date and time the record was created",
+                "readOnly": true
+              }
+            ]
+          },
+          "name": {
+            "title": "TradingPartner name",
+            "description": "Name to uniquely identify the tradingPartner",
+            "type": "string"
+          },
+          "updatedAt": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/OffsetDateTime"
+              },
+              {
+                "description": "Date and time the record was last updated",
+                "readOnly": true
+              }
+            ]
+          },
+          "uuid": {
+            "title": "Unique system-generated identifier for the tradingPartner",
+            "type": "string",
+            "readOnly": true
+          }
+        },
+        "$thisref": "#/components/schemas/TradingPartner"
+      }
+    },
+    "parameters": {
+      "X-TradingChannelName": {
+        "name": "X-TradingChannelName",
+        "in": "header",
+        "description": "Trading partner name (previously configured)\n",
+        "required": true,
+        "schema": {
+          "default": "DEFAULT"
+        }
+      }
+    }
+  }
+}
